@@ -36,7 +36,8 @@ client = TelegramClient(session, api_id, api_hash, proxy=proxy)
 
 # This is our update handler. It is called when a new update arrives.
 async def handler(update):
-    if(debug_enabled) print(update)
+    if(debug_enabled):
+        print(update)
     if update.message.media is not None:
         print("Download started at %s" % (time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())))
         download_result = await client.download_media(update.message, download_path)
