@@ -28,15 +28,15 @@ session = os.environ.get('TG_SESSION', 'tg_downloader')
 api_id = get_env('TG_API_ID', 'Enter your API ID: ', int)
 api_hash = get_env('TG_API_HASH', 'Enter your API hash: ')
 bot_token = get_env('TG_BOT_TOKEN', 'Enter your Telegram BOT token: ')
-download_path = os.environ.get('TG_DOWNLOAD_PATH', '/downloads')
-debug_enabled = os.environ.get('DEBUG_ENABLED', 0, int)
+download_path = os.environ.get('TG_DOWNLOAD_PATH', 'Enter full path to downloads directory: ')
+debug_enabled = ('DEBUG_ENABLED' in os.environ)
 proxy = None  # https://github.com/Anorov/PySocks
 
 client = TelegramClient(session, api_id, api_hash, proxy=proxy)
 
 # This is our update handler. It is called when a new update arrives.
 async def handler(update):
-    if(debug_enabled == 1) print(update)
+    if(debug_enabled) print(update)
     if update.message.media is not None:
         print("Download started at %s" % (time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())))
         download_result = await client.download_media(update.message, download_path)
