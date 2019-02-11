@@ -1,4 +1,4 @@
-Telegram Bot on a Telethon client that auto downloads incoming media files.
+Telegram Bot on a [Telethon client](https://github.com/LonamiWebs/Telethon) that auto downloads incoming media files.
 (cryptg included to speed up downloads)
 
 Running Telethon Downloader
@@ -18,7 +18,7 @@ Generating Telegram API keys
 =================
 Before working with Telegram's API, you need to get your own API ID and hash:
 
-1. Follow `this link <https://my.telegram.org/>`_ and login with your
+1. Go to https://my.telegram.org/ and login with your
    phone number.
 
 2. Click under API Development tools.
@@ -33,7 +33,7 @@ Before working with Telegram's API, you need to get your own API ID and hash:
 
 Creating a Telegram Bot
 =================
-1. Open a conversation with `@BotFather <https://telegram.me/botfather>` in Telegram
+1. Open a conversation with [@BotFather](https://telegram.me/botfather) in Telegram
 
 2. Use the /newbot command to create a new bot. The BotFather will ask you for a name and username, then generate an authorization token for your new bot.
 
