@@ -4,7 +4,7 @@ import sys
 import time
 
 # Import the client
-from telethon import TelegramClient
+from telethon import TelegramClient, events
 
 # This is a helper method to access environment variables or
 # prompt the user to type them in the terminal if missing.
@@ -33,15 +33,19 @@ proxy = None  # https://github.com/Anorov/PySocks
 client = TelegramClient(session, api_id, api_hash, proxy=proxy)
 
 # This is our update handler. It is called when a new update arrives.
+# Register `events.NewMessage` before defining the client.
+@events.register(events.NewMessage)
 async def handler(update):
     if(debug_enabled):
         print(update)
     if update.message.media is not None:
         print("Download started at %s" % (time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())))
+        message = await update.reply('Downloading...')
         download_result = await client.download_media(update.message, download_path)
         end_time = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
         print("Finished downloading file %s at %s" % (download_result,end_time))
         os.chown(download_result, int(user_id), int(group_id))
+        await message.edit('Finished!')
 
 try:
     # Start client with TG_BOT_TOKEN string
@@ -55,4 +59,3 @@ try:
 finally:
     client.disconnect()
     print('Stopped!')
-
