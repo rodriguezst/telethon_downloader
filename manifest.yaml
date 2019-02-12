@@ -1,0 +1,12 @@
+image: rodriguezst/telethon_downloader:latest
+manifests:
+  -
+    image: rodriguezst/telethon_downloader:armhf
+    platform:
+      architecture: arm
+      os: linux
+  -
+    image: rodriguezst/telethon_downloader:amd64
+    platform:
+      architecture: amd64
+      os: linux
