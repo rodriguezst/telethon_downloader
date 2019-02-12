@@ -11,8 +11,13 @@ Running Telethon Downloader
 
  **TG_BOT_TOKEN** : <telegram BOT token generated at ´Creating a Telegram Bot´>
 
+ **USER_ID** : <id of the user to *chown* downloaded files to>
+
+ **GROUP_ID** : <id of the group to *chown* downloaded files to>
+ >NOTE: DOWNLOADED FILES ARE OWNED BY ROOT USER UNTIL THE DOWNLOAD IS COMPLETED TO PROTECT FROM MOVING UNFINISHED FILES
+
  **TG_DOWNLOAD_PATH** : <download folder inside the docker container where the files will be downloaded (full path)>
- NOTE: THIS FOLDER SHOULD BE MOUNTED AS A VOLUME TO HAVE ACCESS TO THE DOWNLOADED FILES FROM THE HOST OS
+>NOTE: THIS FOLDER SHOULD BE MOUNTED AS A VOLUME TO HAVE ACCESS TO THE DOWNLOADED FILES FROM THE HOST OS
 
 Generating Telegram API keys
 =================
