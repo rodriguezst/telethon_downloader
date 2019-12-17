@@ -12,11 +12,12 @@ Running Telethon Downloader
  **TG_API_HASH** : <telegram API hash generated at ´Generating Telegram API keys´>
 
  **TG_BOT_TOKEN** : <telegram BOT token generated at ´Creating a Telegram Bot´>
+ 
+ **TG_MAX_PARALLEL** [OPTIONAL]: <maximum number of parallel downloads allowed (default: 4)>
+ 
+ **TG_DL_TIMEOUT** [OPTIONAL]: <maximum time (in seconds) to wait for a download to complete. after this time the download is cancelled and an error is triggered (default: 3600)>
 
- **USER_ID** : <id of the user to *chown* downloaded files to>
-
- **GROUP_ID** : <id of the group to *chown* downloaded files to>
- >NOTE: DOWNLOADED FILES ARE OWNED BY ROOT USER UNTIL THE DOWNLOAD IS COMPLETED TO PROTECT FROM MOVING UNFINISHED FILES
+ >NOTE: DOWNLOADED FILES ARE SAVED AT A TMP DIRECTORY UNTIL THE DOWNLOAD IS COMPLETED TO PROTECT FROM MOVING UNFINISHED FILES
 
  **TG_DOWNLOAD_PATH** : <download folder inside the docker container where the files will be downloaded (full path)>
 >NOTE: THIS FOLDER SHOULD BE MOUNTED AS A VOLUME TO HAVE ACCESS TO THE DOWNLOADED FILES FROM THE HOST OS

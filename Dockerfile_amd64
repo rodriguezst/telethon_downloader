@@ -1,5 +1,12 @@
+FROM alpine AS usermaker
+RUN addgroup -g 1000 -S group && \
+    adduser -u 1000 -S user -G group
+
 FROM ubuntu:18.04
 MAINTAINER rodriguezst <github.com/rodriguezst>
+
+COPY tg_downloader.py /app/tg_downloader.py
+COPY --from=usermaker /etc/passwd /etc/passwd
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
                                 python3 \
@@ -14,10 +21,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
                 && apt-get remove --purge -y build-essential \
                                 python3-dev \
                 && apt autoremove -y \
-                && rm -rf /var/lib/apt/lists/*
-                
-COPY tg_downloader.py /root/tg_downloader.py
-RUN chmod +x /root/tg_downloader.py
+                && rm -rf /var/lib/apt/lists/* \
+                && chmod +x /app/tg_downloader.py \
+                && chown user:group /app/tg_downloader.py
 
-WORKDIR /root
-ENTRYPOINT ["/root/tg_downloader.py"]
+USER user
+WORKDIR /app
+ENTRYPOINT ["/app/tg_downloader.py"]
