@@ -1,6 +1,8 @@
 Telegram Bot on a [Telethon client](https://github.com/LonamiWebs/Telethon) that auto downloads incoming media files.
 (cryptg included to speed up downloads)
 
+![](AB921D1A-4ABF-4E21-8BC1-F934270ED61E.gif)
+
 Running Telethon Downloader
 =================
  Pull or build the docker image and launch it with the following environment variables:
