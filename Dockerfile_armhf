@@ -1,14 +1,9 @@
-FROM alpine AS usermaker
-RUN addgroup -g 1000 -S group && \
-    adduser -u 1000 -S user -G group
-
 FROM balenalib/armv7hf-ubuntu:bionic
 MAINTAINER rodriguezst <github.com/rodriguezst>
 
 RUN [ "cross-build-start" ]
 
 COPY tg_downloader.py /app/tg_downloader.py
-COPY --from=usermaker /etc/passwd /etc/passwd
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
                                 python3 \
@@ -27,10 +22,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
                 && apt autoremove -y \
                 && rm -rf /var/lib/apt/lists/* \
                 && chmod +x /app/tg_downloader.py \
-                && chown user:group /app/tg_downloader.py
+                && chown 1000:1000 /app/tg_downloader.py
 
 RUN [ "cross-build-end" ]
 
-USER user
+USER 1000:1000
 WORKDIR /app
 ENTRYPOINT ["/app/tg_downloader.py"]
