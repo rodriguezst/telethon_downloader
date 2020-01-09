@@ -10,8 +10,6 @@ from telethon.tl import types
 
 # Enable logging
 import logging
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.DEBUG)
 
 # This is a helper method to access environment variables or
 # prompt the user to type them in the terminal if missing.
@@ -33,6 +31,10 @@ api_hash = get_env('TG_API_HASH', 'Enter your API hash: ')
 bot_token = get_env('TG_BOT_TOKEN', 'Enter your Telegram BOT token: ')
 download_path = get_env('TG_DOWNLOAD_PATH', 'Enter full path to downloads directory: ')
 debug_enabled = ('DEBUG_ENABLED' in os.environ)
+if(debug_enabled):
+    logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level=logging.DEBUG)
+else:
+    logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level=logging.ERROR)
 
 number_of_parallel_downloads = int(os.environ.get('TG_MAX_PARALLEL',4))
 maximum_seconds_per_download = int(os.environ.get('TG_DL_TIMEOUT',3600))
@@ -67,7 +69,7 @@ async def worker(name):
             download_result = await asyncio.wait_for(task, timeout=maximum_seconds_per_download)
             end_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             end_time_short = time.strftime("%H:%M", time.localtime())
-            os.chown(download_result, int(user_id), int(group_id))
+            # os.chown(download_result, int(user_id), int(group_id))
             _,filename = os.path.split(download_result)
             final_path = os.path.join(download_path,filename)
             os.rename(download_result,final_path)
@@ -82,7 +84,7 @@ async def worker(name):
             #print("[%s]: %s" % (e.__class__.__name__, str(e)))
             print("[%s] Exception at %s" % (file_name, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
             await message.edit('Error!')
-            message = await update.reply('ERROR: Exception %s raised downloading this file' % (e.__class__.__name__))
+            message = await update.reply('ERROR: Exception %s raised downloading this file: %s' % (e.__class__.__name__, str(e)))
 
         # Notify the queue that the "work item" has been processed.
         queue.task_done()
